@@ -13,6 +13,7 @@
 #include <q.h>
 #include <io.h>
 #include <stdio.h>
+#include <lab0.h>
 
 /*#define DETAIL */
 #define HOLESIZE	(600)	
@@ -36,6 +37,10 @@ struct	qent	q[NQENT];	/* q table (see queue.c)		*/
 int	nextqueue;		/* next slot in q structure to use	*/
 char	*maxaddr;		/* max memory address (set by sizmem)	*/
 struct	mblock	memlist;	/* list of free memory blocks		*/
+//extern struct syscall_proc_entry;
+//struct syscall_proc_entry *sys_pid;
+
+
 #ifdef	Ntty
 struct  tty     tty[Ntty];	/* SLU buffers and mode control		*/
 #endif
@@ -128,6 +133,7 @@ LOCAL int sysinit()
 	struct	pentry	*pptr;
 	struct	sentry	*sptr;
 	struct	mblock	*mptr;
+	struct syscall_proc_entry *sys_pid;
 
 	numproc = 0;			/* initialize system variables */
 	nextproc = NPROC-1;
@@ -171,14 +177,32 @@ LOCAL int sysinit()
 	pptr->pargs = 0;
 	pptr->pprio = 0;
 	currpid = NULLPROC;
-
+	
+	for (i=0 ; i<27 ; i++){       /*initialize syscall counter and timer to 0*/
+                if (i ==10) 
+			kprintf("\nTask5- Initialized");
+		proctab[i].syscall_count[i] = 0;
+		proctab[i].syscall_exec_time[i] =0;
+	}
+	
 	for (i=0 ; i<NSEM ; i++) {	/* initialize semaphores */
 		(sptr = &semaph[i])->sstate = SFREE;
 		sptr->sqtail = 1 + (sptr->sqhead = newqueue());
 	}
 
 	rdytail = 1 + (rdyhead=newqueue());/* initialize ready list */
-
+/*
+	for(i=0;i<NPROC; i++)
+        {
+        	sys_pid = &syscall_pid[i];
+       		sys_pid[i].valid = 0;
+        	for(j =0;j<27;j++)
+        	{
+				sys_pid[i].syscall_count[j] = 0;
+				sys_pid[i].syscall_total_exec_time[j] = 0;
+		}
+        }	
+	*/			
 #ifdef	MEMMARK
 	_mkinit();			/* initialize memory marking */
 #endif
