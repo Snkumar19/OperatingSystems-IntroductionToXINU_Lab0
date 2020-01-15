@@ -15,7 +15,7 @@ prch(c)
 char c;
 {
 	int i;
-	sleep(5);	
+	sleep(1);	
 }
 int main()
 {
@@ -23,11 +23,12 @@ int main()
 	long o = zfunction(0xaabbccdd);
 	kprintf("\n Task 1: Input = 0xaabbccdd; Output = 0x%x",o);
 	printsegaddress();
-	printprocstks(1);
-        printtos();
+	printtos();
+	printprocstks(10);
 	syscallsummary_start();
 	resume(prX = create(prch,2000,20,"proc X",1,'A'));
-	sleep(20);
+	sleep(2);
+	sleep(3);
 	syscallsummary_stop();
 	printsyscallsummary();
 	return 0;

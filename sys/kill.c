@@ -8,13 +8,17 @@
 #include <io.h>
 #include <q.h>
 #include <stdio.h>
+#include <lab0.h>
 
 /*------------------------------------------------------------------------
  * kill  --  kill a process and remove it from the system
  *------------------------------------------------------------------------
  */
+extern long ctr1000;
 SYSCALL kill(int pid)
 {
+	update_syscall_count(currpid,5);
+        unsigned long syscall_exec_start = ctr1000;
 	STATWORD ps;    
 	struct	pentry	*pptr;		/* points to proc. table for pid*/
 	int	dev;
@@ -22,6 +26,7 @@ SYSCALL kill(int pid)
 	disable(ps);
 	if (isbadpid(pid) || (pptr= &proctab[pid])->pstate==PRFREE) {
 		restore(ps);
+		update_syscall_time(currpid,5,ctr1000 - syscall_exec_start);
 		return(SYSERR);
 	}
 	if (--numproc == 0)
@@ -57,5 +62,6 @@ SYSCALL kill(int pid)
 	default:	pptr->pstate = PRFREE;
 	}
 	restore(ps);
+	update_syscall_time(currpid,5,ctr1000 - syscall_exec_start);
 	return(OK);
 }

@@ -6,19 +6,25 @@
 #include <q.h>
 #include <sleep.h>
 #include <stdio.h>
+#include <lab0.h>
 
 /*------------------------------------------------------------------------
  *  recvtim  -  wait to receive a message or timeout and return result
  *------------------------------------------------------------------------
  */
+extern long ctr1000;
 SYSCALL	recvtim(int maxwait)
 {
+	update_syscall_count(currpid,8);
+        unsigned long syscall_exec_start = ctr1000;
 	STATWORD ps;    
 	struct	pentry	*pptr;
 	int	msg;
 
-	if (maxwait<0 || clkruns == 0)
+	if (maxwait<0 || clkruns == 0){
+		update_syscall_time(currpid,8,ctr1000 - syscall_exec_start);
 		return(SYSERR);
+	}
 	disable(ps);
 	pptr = &proctab[currpid];
 	if ( !pptr->phasmsg ) {		/* if no message, wait		*/
@@ -35,5 +41,6 @@ SYSCALL	recvtim(int maxwait)
 		msg = TIMEOUT;
 	}
 	restore(ps);
+	update_syscall_time(currpid,8,ctr1000 - syscall_exec_start);
 	return(msg);
 }

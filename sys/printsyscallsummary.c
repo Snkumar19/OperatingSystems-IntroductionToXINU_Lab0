@@ -20,7 +20,6 @@ void update_syscall_time(int pid, int syscall_index,unsigned long diff_time)
                 extern struct  pentry  proctab[];
 		if (syscall_flag ==1)
                		 proctab[pid].syscall_exec_time[syscall_index] += diff_time;
-		kprintf("\n!!!!!!!!! diff:%d, %d, %lu", pid, syscall_index, diff_time);
 }
 
 void syscallsummary_start()
@@ -36,6 +35,7 @@ void printsyscallsummary()
 {
 	int i,j;
 	extern struct  pentry  proctab[];
+	kprintf("\n\nTask 5:");
 	for (i =0;i<NPROC; i++) 
 	{
 		if(proctab[i].pstate!= PRFREE)
@@ -46,7 +46,7 @@ void printsyscallsummary()
 			{
 				kprintf("\nSyscall: %s,", syscall_name[j]);
                 		kprintf("Count: %d, ",proctab[i].syscall_count[j]);
-                		kprintf("Average Execution time: %lu (ms) ", proctab[i].syscall_exec_time[j]);
+                		kprintf("Average Execution time: %lu (ms) ", (proctab[i].syscall_exec_time[j]/proctab[i].syscall_count[j]));
 			}
 		}
 	}

@@ -4,10 +4,11 @@
 #include <kernel.h>
 #include <proc.h>
 #include <stdio.h>
+#include <lab0.h>
 
 static unsigned long	*esp;
 static unsigned long	*ebp;
-
+extern long ctr1000;
 #define STKDETAIL
 
 /*------------------------------------------------------------------------
@@ -18,9 +19,13 @@ SYSCALL stacktrace(int pid)
 {
 	struct pentry	*proc = &proctab[pid];
 	unsigned long	*sp, *fp;
-
-	if (pid != 0 && isbadpid(pid))
+	
+	 update_syscall_count(currpid,23);
+        unsigned long syscall_exec_start = ctr1000;
+	if (pid != 0 && isbadpid(pid)){
+		update_syscall_time(currpid,23,ctr1000 - syscall_exec_start);
 		return SYSERR;
+	}
 	if (pid == currpid) {
 		asm("movl %esp,esp");
 		asm("movl %ebp,ebp");
@@ -49,8 +54,10 @@ SYSCALL stacktrace(int pid)
 	kprintf("MAGIC (should be %X): %X\n", MAGIC, *sp);
 	if (sp != (unsigned long *)proc->pbase) {
 		kprintf("unexpected short stack\n");
+		update_syscall_time(currpid,23,ctr1000 - syscall_exec_start);
 		return SYSERR;
 	}
-#endif
+#endif	
+	update_syscall_time(currpid,23,ctr1000 - syscall_exec_start);
 	return OK;
 }

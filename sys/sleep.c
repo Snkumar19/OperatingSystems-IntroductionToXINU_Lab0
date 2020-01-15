@@ -12,8 +12,8 @@
  * sleep  --  delay the calling process n seconds
  *------------------------------------------------------------------------
  */
-extern long ctr1000;
 
+extern long ctr1000;
 SYSCALL	sleep(int n)
 {	
 	update_syscall_count(currpid,18);
@@ -37,6 +37,6 @@ SYSCALL	sleep(int n)
 	if (n > 0)
 		sleep10(10*n);
 	update_syscall_time(currpid,18,ctr1000 - syscall_exec_start);
-	kprintf ("\n\n\n Debug from sleep %lu", ctr1000 - syscall_exec_start); 
+	//kprintf ("\n\n\n Debug from sleep %lu", ctr1000 - syscall_exec_start); 
 	return(OK);
 }
