@@ -15,9 +15,9 @@
 
 extern long ctr1000;
 SYSCALL	sleep(int n)
-{	
+{
+	unsigned long syscall_exec_start = ctr1000;	
 	update_syscall_count(currpid,18);
-	unsigned long syscall_exec_start = ctr1000;
 	STATWORD ps;    
 	if (n<0 || clkruns==0){
 		update_syscall_time(currpid,18,ctr1000 - syscall_exec_start);

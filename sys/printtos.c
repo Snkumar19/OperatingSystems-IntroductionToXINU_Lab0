@@ -1,22 +1,23 @@
 #include<stdio.h>
 
 static unsigned long *esp;
+static unsigned long *ebp;
 
 void printtos()
 {
+	int i;
+	//int a=1,b=2,c=3,d=4;
 	unsigned long *sp;
+	unsigned long *bp;
 	asm("movl %esp,esp");
+	asm("movl %ebp,ebp");
 	sp = esp;
-	kprintf("\n\n Task 3:");
-	kprintf("\nBefore[%X]: %X", (sp+1), *(sp+1) );
-	kprintf("\nAfter[%X]: %X", sp, *sp);
-
-
+	bp = ebp;
+	kprintf("\n\nTask 3:");
+	kprintf("\nBefore[0x%08X]: 0x%08X", (bp+2), *(bp+2) );
+	kprintf("\nAfter[0x%08X]: 0x%08X", bp, *bp);
 	
-	kprintf("\nelement[%X]: %X", (sp+1), *(sp+1) );
-	kprintf("\nelement[%X]: %X", (sp+2), *(sp+2) );
-	kprintf("\nelement[%X]: %X", (sp+3), *(sp+3) );
-	kprintf("\nelement[%X]: %X", (sp+4), *(sp+4) );
-
+	for(i=1;i<4;i++)
+	kprintf("\n\telement[0x%08X]: 0x%08X", (sp+i), *(sp+i) );
 }
 

@@ -36,18 +36,23 @@ void printsyscallsummary()
 	int i,j;
 	extern struct  pentry  proctab[];
 	kprintf("\n\nTask 5:");
-	for (i =0;i<NPROC; i++) 
+	for (i = 0 ;i<NPROC; i++) 
 	{
-		if(proctab[i].pstate!= PRFREE)
-			kprintf("\nProcess [pid =%d]", i);
+		if(proctab[i].pprio != 0){
+			kprintf("\nProcess [pid = %d]", i);
+			//kprintf("Process name : %s, %d", proctab[i].pname, proctab[i].pprio);
 		for (j =0;j<27; j++)
 		{
 			if (proctab[i].syscall_count[j]>0)
 			{
-				kprintf("\nSyscall: %s,", syscall_name[j]);
+				//kprintf("\n -> Process [pid = %d]", i);
+				kprintf("\n\tSyscall: %s,", syscall_name[j]);
                 		kprintf("Count: %d, ",proctab[i].syscall_count[j]);
                 		kprintf("Average Execution time: %lu (ms) ", (proctab[i].syscall_exec_time[j]/proctab[i].syscall_count[j]));
 			}
 		}
+		//kprintf("\n------------------------------", i);
 	}
-}	
+	}
+}
+	

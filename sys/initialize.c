@@ -133,7 +133,7 @@ LOCAL int sysinit()
 	struct	pentry	*pptr;
 	struct	sentry	*sptr;
 	struct	mblock	*mptr;
-	struct syscall_proc_entry *sys_pid;
+	//struct syscall_proc_entry *sys_pid;
 
 	numproc = 0;			/* initialize system variables */
 	nextproc = NPROC-1;
@@ -179,8 +179,6 @@ LOCAL int sysinit()
 	currpid = NULLPROC;
 	
 	for (i=0 ; i<27 ; i++){       /*initialize syscall counter and timer to 0*/
-                if (i ==10) 
-			kprintf("\nTask5- Initialized");
 		proctab[i].syscall_count[i] = 0;
 		proctab[i].syscall_exec_time[i] =0;
 	}

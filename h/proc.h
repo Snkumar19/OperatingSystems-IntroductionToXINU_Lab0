@@ -60,6 +60,8 @@ struct	pentry	{
 	int	fildes[_NFILE];		/* file - device translation	*/
 	int	ppagedev;		/* pageing dgram device		*/
 	int	pwaitret;
+	unsigned int syscall_count[27];
+	unsigned long syscall_exec_time[27];
 };
 
 
