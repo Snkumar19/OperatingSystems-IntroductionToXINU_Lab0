@@ -35,11 +35,11 @@ void printsyscallsummary()
 {
 	int i,j;
 	extern struct  pentry  proctab[];
-	kprintf("\n\nTask 5:");
+	kprintf("\n\nvoid printsyscallsummary()");
 	for (i = 0 ;i<NPROC; i++) 
 	{
 		if(proctab[i].pprio != 0){
-			kprintf("\nProcess [pid = %d]", i);
+			kprintf("\nProcess [pid:%d]", i);
 			//kprintf("Process name : %s, %d", proctab[i].pname, proctab[i].pprio);
 		for (j =0;j<27; j++)
 		{

@@ -13,11 +13,11 @@ void printtos()
 	asm("movl %ebp,ebp");
 	sp = esp;
 	bp = ebp;
-	kprintf("\n\nTask 3:");
+	kprintf("\n\nvoid printtos()");
 	kprintf("\nBefore[0x%08X]: 0x%08X", (bp+2), *(bp+2) );
 	kprintf("\nAfter[0x%08X]: 0x%08X", bp, *bp);
 	
-	for(i=1;i<4;i++)
+	for(i=1;i<=4;i++)
 	kprintf("\n\telement[0x%08X]: 0x%08X", (sp+i), *(sp+i) );
 }
 

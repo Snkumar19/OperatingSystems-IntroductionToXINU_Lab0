@@ -15,7 +15,7 @@ void printprocstks(int priority)
         unsigned long *sp;
 
 //	kprintf("\n\n NPROC = %d, numproc = %d, nextproc= %d,currpid = %d ",NPROC, numproc,nextproc,currpid );
-	kprintf("\n\nTask 4:");
+	kprintf("\n\nvoid printprocstks(int priority)");
 	for(i =0; i < NPROC; i++)
 	{
 		proc = &proctab[i];
@@ -33,12 +33,12 @@ void printprocstks(int priority)
 		 	  //fp = (unsigned long *)proc->pbase;
 		}
 		kprintf("\nProcess [%s]",proc->pname);
-		kprintf("\n\tpid = %d", i);
-		kprintf("\n\tpriority = %d", proc->pprio);
-		kprintf("\n\tbase = 0x%08X", proc->pbase);
-	        kprintf("\n\tlimit = 0x%08X", proc->plimit);
-		kprintf("\n\tlen = %d", proc->pstklen);
-		kprintf("\n\tpointer = 0x%08X", sp);
+		kprintf("\n\tpid: %d", i);
+		kprintf("\n\tpriority: %d", proc->pprio);
+		kprintf("\n\tbase: 0x%08X", proc->pbase);
+	        kprintf("\n\tlimit: 0x%08X", proc->plimit);
+		kprintf("\n\tlen: %d", proc->pstklen);
+		kprintf("\n\tpointer: 0x%08X", sp);
 
 		
 		}  
