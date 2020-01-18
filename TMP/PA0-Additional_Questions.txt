@@ -1,0 +1,86 @@
+1.Assuming the XINU text begins at address 0x0, draw a rough diagram of XINU’s memory layout with addresses derived from your experimental measurements. Include the information you uncovered from running your version of printsegaddress() and printprocstks().
+
+
+Answer – 
+
+
+ ____________   0x00ffeff8  (base pointer)     Higher Address           
+|            |
+|    STACK   |  0x00ffef80  (stack pointer)        	
+| (main pro- |
+|    ss)     |
+|____________|  0x00ffdffc  (limit)
+|            |
+|    FREE    |
+|    SPACE   |
+|            |
+|____________|
+|            |
+|            |
+|    HEAP    |
+|            |
+|____________|  0x00028c38 (end)
+|            |
+|            |
+|     BSS    |
+|            |
+|____________|  0x000205b9 (edata)
+|            |
+|            |
+|    DATA    |
+|            |
+|____________|   0x0001be6d (etext)
+|            |
+|            |
+|    TEXT    | 
+|            |
+|____________|   0x0 			Lower Address
+
+
+
+2.What is the difference in stack top address before and after calling printtos() ? Draw a diagram to illustrate what are the contents of the items pushed into the stack between these two time points.
+
+ ____________   0x00ffefb0
+|            |
+|            |
+|   RETURN   |
+|   ADDRESS  |
+|____________|   
+|            |
+|            |
+|   SAVED    | 
+|    EBP     |
+|____________| 0x00ffefa8   
+
+
+Return Address and EBP values are pushed onto the stack.
+Address before pushing onto stack - 0x00ffefb0
+Address after pushing on to stack - 0x00ffefa8   
+
+
+3.Which byte order is adopted in the host machine that we are using? How did you find out?
+
+Byte order used -  Little Endian. Used the below mentioned command - 
+lscpu | grep Endian
+Byte Order:            Little Endian
+
+
+4.Briefly describe the mov, push, pusha, pop, and popa instructions in the x86.
+
+MOV - Copies data from one location to another
+Eg: mov    %esp,%ebp – Moves 4 bytes of data from ebx to eax
+
+PUSH - Push data on to stack
+Eg: push   %ebp – Pushes ebp on stack
+
+PUSHA - Push all general purpose registers on to stack in certain order.
+
+POP - Remove data from stack
+Eg; pop (%ebx) – Pop the top element from the stack into ebx
+
+POPA - Pop all general purpose registers from stack in certain order
+
+5. In a stack frame, local variables are stored below the top of the stack. In task 3, does your result show all the local variables declared in your printtos function? If not, can you explain that? (hint: try to disable the compiler optimization by specifying -O0 in your Makefile)
+
+No, the results do not show the values of local variables when compiler optimization is not disabled. It looks like the compiler adds additional storage space along with the space required for local variables to be added. On disabling Compiler optimization, I was able to see the values.
+
