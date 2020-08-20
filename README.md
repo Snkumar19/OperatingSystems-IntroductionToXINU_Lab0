@@ -1,4 +1,5 @@
-# csc501
+# IntroductionToXINU_Lab0
+
 You will be using the csc501-lab0.tgz you have downloaded and compiled by following the lab setup guide. And you are asked to write several XINU functions that perform the following tasks:
 
 1. long zfunction(long param)
@@ -30,13 +31,3 @@ To help you complete this task, we provide two files, syscalls.txt lists all the
 
 Implement this lab as a set of functions that can be called from main(). Each function should reside in a separate file in the sys directory, and should be incorporated into the Makefile. The files should be named after the functions they are implementing with C files having the .c extension and the assembly files having the .S extension. For example, the file that will hold void printsegaddress() should be named printsegaddress.c; and the file that will hold long zfunction(long param) should be named zfunction.S. You should put syscallsummary_start, syscallsummary_stop functions in the same file as printsyscallsummary function and name it as printsyscallsummary.c . If you require a header file, please name it lab0.h. Note: as you create new files, you may need to update the Makefile (located in the compile/directory) to configure it to compile your files correctly. Just look at what is done for the existing files (e.g., main.c) to see what you have to do.
 
-5. Additional Questions
-Write your answers to the following questions in a file named Lab0Answers.txt(in simple text).
-
-Please place this file in the sys/ directory and turn it in, along with the above programming assignment.
-
-Assuming the XINU text begins at address 0x0, draw a rough diagram of XINU’s memory layout with addresses derived from your experimental measurements. Include the information you uncovered from running your version of printsegaddress() and printprocstks().
-What is the difference in stack top address before and after calling printtos() ? Draw a diagram to illustrate what are the contents of the items pushed into the stack between these two time points.
-Which byte order is adopted in the host machine that we are using ? How did you find out ?
-Briefly describe the mov, push, pusha, pop, and popa instructions in the x86.
-In a stack frame, local variables are stored below the top of the stack. In task 3, does your result show all the local variables declared in your printtos function? If not, can you explain that? (hint: try to disable the compiler optimization by specifying -O0 in your Makefile)
